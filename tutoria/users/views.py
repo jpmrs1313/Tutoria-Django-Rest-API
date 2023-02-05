@@ -1,9 +1,20 @@
-from django.contrib.auth.models import User
 from rest_framework import viewsets
-from .serializers import UserSerializer
+from rest_framework.response import Response
+from rest_framework.decorators import action
 
-class UserViewSet(viewsets.ModelViewSet):
+from .serializers import CustomUserSerializer
+from .models import CustomUser
 
-    
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
+class CustomUserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)

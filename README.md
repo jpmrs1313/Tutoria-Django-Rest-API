@@ -13,6 +13,7 @@ Teacher mentoring programs in schools are programs that pair students with teach
 * Schedule meetings between teachers and students (To Do)
 * Notify students about the meetings (To Do)
 
+You can find the documentation of this API on endpoint /api/docs/
 
 ## How to Install and Run the Project
 

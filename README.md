@@ -9,6 +9,7 @@ Teacher mentoring programs in schools are programs that pair students with teach
 ## Features
 * CRUD operations on teacher and student users (Finishing)
 * Associate a teacher to each student (Done)
+* Authentication and Authorization
 * Schedule meetings between teachers and students (To Do)
 * Notify students about the meetings (To Do)
 

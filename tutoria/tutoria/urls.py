@@ -13,21 +13,34 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path, include
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
 from rest_framework import routers
-from users.views import UserViewSet
+from users.views import CustomUserViewSet
 from teachers.views import TeacherViewSet
 from students.views import StudentViewSet
 
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="API - Tutoria",
+      default_version='v1',
+      description="Django Rest API",
+   ),
+   public=True,
+)
+
+
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
+router.register(r'users', CustomUserViewSet)
 router.register(r'students', StudentViewSet)
 router.register(r'teachers', TeacherViewSet)
 
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('api/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

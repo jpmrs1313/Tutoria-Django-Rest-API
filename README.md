@@ -1,23 +1,38 @@
 # Tutoria-Django-Rest-API
 
-This repository presents a Django Rest Framework API to allow to implement a Tutoria Program (Mentoring Program). 
+📚👨‍🏫👩‍🏫👩‍🎓👨‍🎓
 
-Teacher mentoring programs in schools are programs that pair students with teacher mentors to provide support, guidance, and positive role models. These programs are designed to help students develop important skills and build positive relationships, as well as to provide a supportive network for students who may be struggling in school. Teacher mentors can help students with homework, provide guidance on academic and personal issues, and serve as a positive influence in the student's life. Teacher mentoring programs can also provide students with exposure to new experiences and opportunities, and help them develop a sense of self-esteem and confidence. Schools can benefit from teacher mentoring programs by providing a supportive environment for students, reducing absenteeism and behavioral problems, and improving students' academic performance. Overall, teacher mentoring programs can play a crucial role in helping students achieve their full potential and lead successful and fulfilling lives.
+This repository provides a Django Rest Framework API for implementing a Teacher Mentoring Program, which pairs students with teacher mentors to provide support, guidance, and positive role models.
 
+## Why Teacher Mentoring Programs?
 
+🚀🎓💪
+
+Teacher mentoring programs can help students develop important skills and build positive relationships. They provide a supportive network for students who may be struggling in school, and help students with homework, academic and personal issues, and exposure to new experiences and opportunities. Teacher mentoring programs can also reduce absenteeism and behavioral problems, and improve academic performance, creating a supportive environment for students to achieve their full potential and lead successful and fulfilling lives.
 
 ## Features
-* CRUD operations on teacher and student users (Finishing)
-* Associate a teacher to each student (Done)
-* Authentication and Authorization (To Do)
-* Schedule meetings between teachers and students (To Do)
-* Notify students about the meetings (To Do)
 
-You can find the documentation of this API on endpoint /api/docs/
+✨💻🔧
+
+The following features are currently available in this API:
+
+* CRUD operations on teacher and student users (completed) ✅
+* Association of a teacher with each student (completed) ✅
+* Authentication and Authorization (to be implemented) 🚧
+* Scheduling of meetings between teachers and students (to be implemented) 🚧
+* Notification of students about upcoming meetings (to be implemented) 🚧
+
+Please note that there is a bug in the put request on teacher and student endpoints. It is mandatory to change the user email to the put request to be successful. You can find the API documentation on the endpoint /api/docs/.
 
 ## How to Install and Run the Project
 
-1. Clone repository
-2. Run command to install python dependencies "pip install -r requirements.txt"
-3. Run the migration command to apply the database migrations "python manage.py migrate"
-4. Start the development server with command "python manage.py runserver"
+👷‍♂️👷‍♀️🔨
+
+Follow these steps to install and run the project:
+
+1. Clone the repository 📥
+2. Install the Python dependencies with the command "pip install -r requirements.txt" 💻
+3. Apply the database migrations with the command "python manage.py migrate" 🔧
+4. Start the development server with the command "python manage.py runserver" 🚀
+
+We hope that this API will be useful in implementing your own Teacher Mentoring Program. If you encounter any issues, please feel free to raise an issue or reach out to us. 💬

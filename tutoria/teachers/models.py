@@ -9,8 +9,5 @@ class Teacher(models.Model):
     number = models.IntegerField(unique=True, null=False, default=None)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-
-@receiver(post_delete, sender=CustomUser)
-def delete_user(sender, instance, **kwargs):
-    user = Teacher.objects.get(user=instance)
-    user.delete()
+    def __str__(self):
+        return self.user.email

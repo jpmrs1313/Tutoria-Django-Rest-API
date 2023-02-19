@@ -11,3 +11,8 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.user.email
+
+
+@receiver(post_delete, sender=Teacher)
+def delete_user(sender, instance, **kwargs):
+    instance.user.delete()

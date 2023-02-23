@@ -16,13 +16,14 @@ Teacher mentoring programs can help students develop important skills and build 
 
 The following features are currently available in this API:
 
+* Authentication and Authorization (to be implemented) 🚧
 * CRUD operations on teacher and student users (completed) ✅
 * Association of a teacher with each student (completed) ✅
-* Authentication and Authorization (to be implemented) 🚧
+* Filtering teachers and students ✅
 * Scheduling of meetings between teachers and students (to be implemented) 🚧
 * Notification of students about upcoming meetings (to be implemented) 🚧
 
-Please note that there is a bug in the put request on teacher and student endpoints. It is mandatory to change the user email to the put request to be successful. You can find the API documentation on the endpoint /api/docs/.
+You can find the API documentation on the endpoint /api/docs/.
 
 ## How to Install and Run the Project
 

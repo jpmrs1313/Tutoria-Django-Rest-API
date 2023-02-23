@@ -14,33 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
-from drf_yasg import openapi
-from drf_yasg.views import get_schema_view
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework import routers
 from users.views import CustomUserViewSet
 from teachers.views import TeacherViewSet
 from students.views import StudentViewSet
-
-
-schema_view = get_schema_view(
-   openapi.Info(
-      title="API - Tutoria",
-      default_version='v1',
-      description="Django Rest API",
-   ),
-   public=True,
-)
-
+from meetings.views import MeetingViewSet
 
 router = routers.DefaultRouter()
-router.register(r'users', CustomUserViewSet)
-router.register(r'students', StudentViewSet)
-router.register(r'teachers', TeacherViewSet)
-
-
+router.register(r"users", CustomUserViewSet)
+router.register(r"students", StudentViewSet)
+router.register(r"teachers", TeacherViewSet)
+router.register(r"meetings", MeetingViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('api/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path("", include(router.urls)),
+    path("__debug__/", include("debug_toolbar.urls")),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
 ]

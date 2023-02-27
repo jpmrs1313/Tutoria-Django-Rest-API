@@ -8,13 +8,12 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("teachers", "0001_initial"),
-        ("students", "0001_initial"),
+        ("rooms", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name="Meeting",
+            name="RoomReservation",
             fields=[
                 (
                     "id",
@@ -25,21 +24,14 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("datetime", models.DateTimeField()),
+                ("begin", models.DateTimeField()),
+                ("end", models.DateTimeField()),
                 (
-                    "student",
+                    "room",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name="meetings",
-                        to="students.student",
-                    ),
-                ),
-                (
-                    "teacher",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="meetings",
-                        to="teachers.teacher",
+                        related_name="roomreservation",
+                        to="rooms.room",
                     ),
                 ),
             ],

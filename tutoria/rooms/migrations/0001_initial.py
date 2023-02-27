@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="CustomUser",
+            name="Room",
             fields=[
                 (
                     "id",
@@ -21,19 +21,11 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("password", models.CharField(max_length=128, verbose_name="password")),
-                (
-                    "last_login",
-                    models.DateTimeField(
-                        blank=True, null=True, verbose_name="last login"
-                    ),
-                ),
-                ("email", models.EmailField(max_length=255, unique=True)),
-                ("first_name", models.CharField(max_length=32)),
-                ("last_name", models.CharField(max_length=32)),
+                ("name", models.CharField(max_length=64)),
+                ("building", models.CharField(max_length=64)),
             ],
             options={
-                "abstract": False,
+                "unique_together": {("name", "building")},
             },
         ),
     ]

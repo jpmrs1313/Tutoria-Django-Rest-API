@@ -20,16 +20,20 @@ from users.views import CustomUserViewSet
 from teachers.views import TeacherViewSet
 from students.views import StudentViewSet
 from meetings.views import MeetingViewSet
+from rooms.views import RoomViewSet
+from roomsreservations.views import RoomReservationViewSet
 
 router = routers.DefaultRouter()
 router.register(r"users", CustomUserViewSet)
 router.register(r"students", StudentViewSet)
 router.register(r"teachers", TeacherViewSet)
 router.register(r"meetings", MeetingViewSet)
+router.register(r"rooms", RoomViewSet)
+router.register(r"roomsreservations", RoomReservationViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
     path("__debug__/", include("debug_toolbar.urls")),
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="docs"),
 ]

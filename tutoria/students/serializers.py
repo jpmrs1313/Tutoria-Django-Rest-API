@@ -6,6 +6,7 @@ from django.db import transaction
 
 class StudentSerializer(serializers.ModelSerializer):
     user = CustomUserSerializer()
+    teacher = serializers.IntegerField(source="teacher_id")
 
     class Meta:
         model = Student

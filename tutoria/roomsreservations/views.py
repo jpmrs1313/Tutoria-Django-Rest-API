@@ -3,6 +3,6 @@ from .models import RoomReservation
 from .serializers import RoomReservationSerializer
 
 
-class RoomReservationViewSet(viewsets.ModelViewSet):
+class RoomReservationViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = RoomReservation.objects.all()
     serializer_class = RoomReservationSerializer

@@ -8,3 +8,6 @@ class RoomReservation(models.Model):
     )
     begin = models.DateTimeField()
     end = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.room} : From {self.begin} To {self.end}"

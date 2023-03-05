@@ -13,7 +13,7 @@ class Student(models.Model):
     )
 
     def __str__(self):
-        return self.email
+        return self.user.email
 
 
 @receiver(post_delete, sender=Student)

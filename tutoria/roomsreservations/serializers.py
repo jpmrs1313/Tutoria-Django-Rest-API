@@ -4,6 +4,8 @@ from django.utils import timezone
 
 
 class RoomReservationSerializer(serializers.ModelSerializer):
+    room = serializers.IntegerField(source="room_id")
+
     class Meta:
         model = RoomReservation
         fields = ["id", "room", "begin", "end"]

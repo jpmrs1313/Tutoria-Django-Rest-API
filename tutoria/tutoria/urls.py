@@ -17,6 +17,7 @@ from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework import routers
 from users.views import CustomUserViewSet
+from admins.views import AdminViewSet
 from teachers.views import TeacherViewSet
 from students.views import StudentViewSet
 from meetings.views import MeetingViewSet
@@ -25,6 +26,7 @@ from roomsreservations.views import RoomReservationViewSet
 
 router = routers.DefaultRouter()
 router.register(r"users", CustomUserViewSet)
+router.register(r"admins", AdminViewSet)
 router.register(r"students", StudentViewSet)
 router.register(r"teachers", TeacherViewSet)
 router.register(r"meetings", MeetingViewSet)

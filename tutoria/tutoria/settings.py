@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,8 +13,6 @@ SECRET_KEY = "django-insecure-7^e2son36vr33d9*rrtxya&w_i_sol_y%zy+=qw5%p&&%*a5a-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = "users.CustomUser"
 
@@ -32,6 +31,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "debug_toolbar",
     "users",
+    "admins",
     "teachers",
     "students",
     "meetings",
@@ -109,8 +109,27 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
+    {
+        "NAME": "django_password_validators.password_character_requirements.password_validation.PasswordCharacterValidator",
+        "OPTIONS": {
+            "min_length_digit": 1,
+            "min_length_alpha": 1,
+            "min_length_special": 1,
+            "min_length_lower": 1,
+            "min_length_upper": 1,
+            "special_characters": "~!@#$%^&*()_+{}\":;'[]",
+        },
+    },
 ]
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "jpmrs1313@gmail.com"  # Replace with your Gmail email address
+EMAIL_HOST_PASSWORD = os.environ.get(
+    "django_pass"
+)  # Replace with your Gmail password or app password if you have 2-Step Verification enabled
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

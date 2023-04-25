@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework_simplejwt",
     "django_filters",
     "drf_spectacular",
     "debug_toolbar",
@@ -51,7 +52,9 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    # YOUR SETTINGS
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication"
+    ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
@@ -79,6 +82,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = "tutoria.wsgi.application"
 

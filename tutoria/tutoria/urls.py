@@ -16,13 +16,15 @@ Including another URLconf
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework import routers
-from users.views import CustomUserViewSet
+from users.views import CustomUserViewSet, PasswordView
 from admins.views import AdminViewSet
 from teachers.views import TeacherViewSet
 from students.views import StudentViewSet
 from meetings.views import MeetingViewSet
 from rooms.views import RoomViewSet
 from roomsreservations.views import RoomReservationViewSet
+from django.urls import path
+from rest_framework_simplejwt import views as jwt_views
 
 router = routers.DefaultRouter()
 router.register(r"users", CustomUserViewSet)
@@ -36,6 +38,9 @@ router.register(r"roomsreservations", RoomReservationViewSet)
 urlpatterns = [
     path("", include(router.urls)),
     path("__debug__/", include("debug_toolbar.urls")),
-    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
-    path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="docs"),
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="docs"),
+    path("token/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("token/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
+    path("password/", PasswordView.as_view()),
 ]

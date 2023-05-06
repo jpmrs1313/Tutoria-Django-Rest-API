@@ -1,9 +1,29 @@
 from django.db import models
-from teachers.models import Teacher
-from students.models import Student
-from roomsreservations.models import RoomReservation
+from users.models import Teacher, Student
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+
+
+class Room(models.Model):
+    name = models.CharField(max_length=64, null=False)
+    building = models.CharField(max_length=64, null=False)
+
+    class Meta:
+        unique_together = ["name", "building"]
+
+    def __str__(self):
+        return f"{self.name} - {self.building}"
+
+
+class RoomReservation(models.Model):
+    room = models.ForeignKey(
+        Room, on_delete=models.CASCADE, related_name="roomreservation"
+    )
+    begin = models.DateTimeField()
+    end = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.room} : From {self.begin} To {self.end}"
 
 
 class Meeting(models.Model):

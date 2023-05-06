@@ -1,50 +1,52 @@
-from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from .serializers import CustomUserSerializer
-from .models import CustomUser
-from django.contrib.auth.password_validation import validate_password
+from rest_framework import viewsets, mixins, filters, permissions
+from django_filters import rest_framework
+from .models import CustomUser, Admin, Teacher, Student
+from .serializers import (
+    CustomUserSerializer,
+    PasswordSerializer,
+    AdminSerializer,
+    TeacherSerializer,
+    StudentSerializer,
+)
+from .filters import UserBaseFilter, StudentFilter, TeacherFilter
+
+FILTERS_BACKEND = [
+    rest_framework.DjangoFilterBackend,
+    filters.SearchFilter,
+    filters.OrderingFilter,
+]
 
 
-class CustomUserViewSet(ReadOnlyModelViewSet):
+class CustomUserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [IsAuthenticated]
+    filterset_class = UserBaseFilter
+    permission_classes = [permissions.IsAuthenticated]
 
 
-class PasswordView(APIView):
-    permission_classes = [AllowAny]
+class PasswordView(viewsets.GenericViewSet, mixins.CreateModelMixin):
+    serializer_class = PasswordSerializer
+    permission_classes = [permissions.AllowAny]
 
-    def post(self, request):
-        email = request.data.get("email")
-        password = request.data.get("password")
-        token = request.data.get("token")
 
-        try:
-            user = CustomUser.objects.get(email=email)
-        except CustomUser.DoesNotExist:
-            return Response({"detail": f"No user with email {email}"}, status=400)
+class AdminViewSet(viewsets.ModelViewSet):
+    queryset = Admin.objects.select_related("user")
+    serializer_class = AdminSerializer
+    filterset_class = UserBaseFilter
+    permission_classes = [permissions.IsAuthenticated]
 
-        if user.is_active:
-            return Response({"detail": "User already set the password"}, status=400)
 
-        if not token:
-            return Response({"detail": "Verification code is required"}, status=400)
+class TeacherViewSet(viewsets.ModelViewSet):
+    queryset = Teacher.objects.select_related("user")
+    serializer_class = TeacherSerializer
+    filter_backends = FILTERS_BACKEND
+    filterset_class = TeacherFilter
+    permission_classes = [permissions.IsAuthenticated]
 
-        if token != user.define_password_token:
-            return Response({"detail": "Invalid verification code"}, status=400)
 
-        if not password:
-            return Response({"detail": "Password is required"}, status=400)
-
-        try:
-            validate_password(password=password)
-        except Exception as e:
-            return Response({"detail": str(e)}, status=400)
-
-        user.set_password(password)
-        user.is_active = True
-        user.save()
-
-        return Response({"detail": "Password updated successfully"})
+class StudentViewSet(viewsets.ModelViewSet):
+    queryset = Student.objects.select_related("user")
+    serializer_class = StudentSerializer
+    filter_backends = FILTERS_BACKEND
+    filterset_class = StudentFilter
+    permission_classes = [permissions.IsAuthenticated]

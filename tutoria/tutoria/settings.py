@@ -21,6 +21,7 @@ AUTH_USER_MODEL = "users.CustomUser"
 
 
 INSTALLED_APPS = [
+    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -32,12 +33,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "debug_toolbar",
     "users",
-    "admins",
-    "teachers",
-    "students",
     "meetings",
-    "rooms",
-    "roomsreservations",
 ]
 
 MIDDLEWARE = [

@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User, Group
 from django.db import models
 from django import dispatch
 
@@ -33,6 +33,7 @@ class CustomUser(AbstractBaseUser):
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
     is_active = models.BooleanField(default=False)
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, blank=True)
 
     define_password_token = models.CharField(max_length=10, blank=True)
 
@@ -60,10 +61,16 @@ class CustomUser(AbstractBaseUser):
 class Admin(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.user.email
+
 
 class Teacher(models.Model):
     number = models.IntegerField(unique=True, null=False, default=None)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.email
 
 
 class Student(models.Model):
@@ -72,6 +79,9 @@ class Student(models.Model):
     teacher = models.ForeignKey(
         Teacher, on_delete=models.CASCADE, related_name="students"
     )
+
+    def __str__(self):
+        return self.user.email
 
 
 @dispatch.receiver(models.signals.post_delete, sender=Teacher)

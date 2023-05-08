@@ -1,17 +1,25 @@
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.models import Group
 from django.core.mail import send_mail
 from rest_framework import serializers
 import random
 from .models import CustomUser, Admin, Teacher, Student
 
 
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ["name"]
+
+
 class CustomUserSerializer(serializers.ModelSerializer):
     is_active = serializers.ReadOnlyField()
+    group = GroupSerializer(read_only=True)
 
     class Meta:
         model = CustomUser
-        fields = ["id", "email", "first_name", "last_name", "is_active"]
+        fields = ["id", "email", "first_name", "last_name", "is_active", "group"]
 
     def create(self, validated_data):
         password = CustomUser.objects.make_random_password()
@@ -75,13 +83,20 @@ class UserSerializerMixin:
     def create(self, validated_data):
         user_data = validated_data.pop("user")
 
-        serializer = CustomUserSerializer(data=user_data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
+        user_type = self.Meta.model.__name__
+        group_name = f"{user_type}s"
+        user_group = Group.objects.get(name=group_name)
+
+        user_serializer = CustomUserSerializer(data=user_data)
+        user_serializer.is_valid(raise_exception=True)
+        user = user_serializer.save()
+
+        user.group = user_group
+        user.save()
 
         validated_data["user"] = user
-
-        return super().create(validated_data)
+        instance = super().create(validated_data)
+        return instance
 
     def update(self, instance, validated_data):
         user_data = validated_data.pop("user")

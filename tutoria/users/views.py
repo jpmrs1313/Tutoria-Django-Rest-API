@@ -9,6 +9,7 @@ from .serializers import (
     StudentSerializer,
 )
 from .filters import UserBaseFilter, StudentFilter, TeacherFilter
+from permissions.utils import HasPermission
 
 FILTERS_BACKEND = [
     rest_framework.DjangoFilterBackend,
@@ -21,19 +22,19 @@ class CustomUserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
     filterset_class = UserBaseFilter
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, HasPermission]
 
 
 class PasswordView(viewsets.GenericViewSet, mixins.CreateModelMixin):
     serializer_class = PasswordSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated, HasPermission]
 
 
 class AdminViewSet(viewsets.ModelViewSet):
     queryset = Admin.objects.select_related("user")
     serializer_class = AdminSerializer
     filterset_class = UserBaseFilter
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, HasPermission]
 
 
 class TeacherViewSet(viewsets.ModelViewSet):
@@ -41,7 +42,7 @@ class TeacherViewSet(viewsets.ModelViewSet):
     serializer_class = TeacherSerializer
     filter_backends = FILTERS_BACKEND
     filterset_class = TeacherFilter
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, HasPermission]
 
 
 class StudentViewSet(viewsets.ModelViewSet):
@@ -49,4 +50,4 @@ class StudentViewSet(viewsets.ModelViewSet):
     serializer_class = StudentSerializer
     filter_backends = FILTERS_BACKEND
     filterset_class = StudentFilter
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, HasPermission]

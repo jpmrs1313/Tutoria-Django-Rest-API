@@ -3,8 +3,9 @@ from .views import MeetingViewSet, RoomViewSet, RoomReservationViewSet
 
 router = routers.DefaultRouter()
 
+
+router.register(r"rooms", RoomViewSet)
+router.register(r"roomreservations", RoomReservationViewSet)
 router.register(r"", MeetingViewSet)
-router.register(r"", RoomViewSet)
-router.register(r"", RoomReservationViewSet)
 
 urlpatterns = router.urls

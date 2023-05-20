@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
-from enum import Enum
+from django.contrib.auth.models import Group
 
 
 class Operations(models.TextChoices):
@@ -17,4 +17,12 @@ class Policy(models.Model):
     Operation = models.CharField(max_length=10, choices=Operations.choices)
 
     def __str__(self):
-        return f"{self.content_type} - {self.operation}"
+        return f"{self.ContentType} - {self.Operation}"
+
+
+class RolePolicy(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, blank=True)
+    policy = models.ForeignKey(Policy, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.group} - {self.policy}"

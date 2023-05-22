@@ -37,6 +37,10 @@ class Meeting(models.Model):
 
     reservation = models.OneToOneField(RoomReservation, on_delete=models.CASCADE)
 
+    notifiedMeetingTomorrow = models.BooleanField(default=False)
+
+    notifiedMeetingInHalfHour = models.BooleanField(default=False)
+
     def __str__(self):
         return f"{self.teacher} with {self.student} at {self.reservation}"
 

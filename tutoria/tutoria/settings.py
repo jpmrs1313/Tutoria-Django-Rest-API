@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     "django_filters",
     "drf_spectacular",
     "debug_toolbar",
+    "django_celery_beat",
+    "django_celery_results",
     "users",
     "meetings",
     "permissions",
@@ -163,3 +165,11 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
+
+
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BROKER_URL = "amqp://guest:guest@localhost:5672/"
+CELERY_RESULT_BACKEND = (
+    "django-db"  # Optional: Use Django database as the result backend
+)

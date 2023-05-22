@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Meeting, Room, RoomReservation
 from .serializers import MeetingSerializer, RoomSerializer, RoomReservationSerializer
 from permissions.utils import HasPermission
@@ -20,4 +20,4 @@ class RoomViewSet(ModelViewSet):
 class MeetingViewSet(ModelViewSet):
     queryset = Meeting.objects.all()
     serializer_class = MeetingSerializer
-    permission_classes = [IsAuthenticated, HasPermission]
+    permission_classes = [AllowAny]

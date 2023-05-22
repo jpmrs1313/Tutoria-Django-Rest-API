@@ -66,10 +66,19 @@ class RoomReservationSerializer(serializers.ModelSerializer):
 class MeetingSerializer(serializers.ModelSerializer):
     student = serializers.IntegerField(source="student_id")
     reservation = RoomReservationSerializer()
+    notifiedMeetingTomorrow = serializers.BooleanField(read_only=True)
+    notifiedMeetingInHalfHour = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Meeting
-        fields = ["id", "teacher", "student", "reservation"]
+        fields = [
+            "id",
+            "teacher",
+            "student",
+            "reservation",
+            "notifiedMeetingTomorrow",
+            "notifiedMeetingInHalfHour",
+        ]
         read_only_fields = ["teacher"]
 
     @transaction.atomic
